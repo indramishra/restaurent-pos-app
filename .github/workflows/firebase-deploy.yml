@@ -11,11 +11,18 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      # Add your TypeScript/JavaScript build steps here if needed
-      - name: Install Dependencies & Build
-        run: |
-          npm ci
-          npm run build
+      # Sets up the Flutter environment on the GitHub runner
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          cache: true # Caches dependencies to speed up future builds
+
+      - name: Install Dependencies
+        run: flutter pub get
+
+      - name: Build Web App
+        run: flutter build web
 
       - name: Deploy to Firebase Hosting
         uses: FirebaseExtended/action-hosting-deploy@v0
