@@ -1,0 +1,55 @@
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "restorent-pos-system",
+          "appId": "1:547289949240:android:303b5a29ba150d8c42f2cd",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "ios": {
+        "default": {
+          "projectId": "restorent-pos-system",
+          "appId": "1:547289949240:ios:58fee48fc9f4655b42f2cd",
+          "uploadDebugSymbols": false,
+          "fileOutput": "ios/Runner/GoogleService-Info.plist"
+        }
+      },
+      "macos": {
+        "default": {
+          "projectId": "restorent-pos-system",
+          "appId": "1:547289949240:ios:58fee48fc9f4655b42f2cd",
+          "uploadDebugSymbols": false,
+          "fileOutput": "macos/Runner/GoogleService-Info.plist"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "restorent-pos-system",
+          "configurations": {
+            "android": "1:547289949240:android:303b5a29ba150d8c42f2cd",
+            "ios": "1:547289949240:ios:58fee48fc9f4655b42f2cd",
+            "macos": "1:547289949240:ios:58fee48fc9f4655b42f2cd",
+            "web": "1:547289949240:web:0757f55a3ad13d3c42f2cd",
+            "windows": "1:547289949240:web:07a90478056d982042f2cd"
+          }
+        }
+      }
+    }
+  },
+  "hosting": {
+    "public": "restorent-pos-system",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}
