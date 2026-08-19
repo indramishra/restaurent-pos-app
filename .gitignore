@@ -47,6 +47,9 @@ app.*.map.json
 # Widget Preview related
 .widget_preview/
 
+# Generated hosting staging dir (built by CI)
+/public/
+
 # Firebase / credentials
 .firebase/
 firebase-debug.log

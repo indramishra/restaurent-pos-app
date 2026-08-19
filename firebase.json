@@ -39,13 +39,21 @@
     }
   },
   "hosting": {
-    "public": "build/web",
+    "public": "public",
     "ignore": [
       "firebase.json",
       "**/.*",
       "**/node_modules/**"
     ],
     "rewrites": [
+      {
+        "source": "/pos",
+        "destination": "/pos/index.html"
+      },
+      {
+        "source": "/pos/**",
+        "destination": "/pos/index.html"
+      },
       {
         "source": "**",
         "destination": "/index.html"

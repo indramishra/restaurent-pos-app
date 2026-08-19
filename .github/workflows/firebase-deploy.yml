@@ -22,8 +22,18 @@ jobs:
       - name: Install Dependencies
         run: flutter pub get
 
-      - name: Build Web App
-        run: flutter build web
+      - name: Build Customer Web App (lib/main.dart)
+        run: flutter build web --release
+
+      - name: Build POS Web App (lib/main_pos.dart)
+        run: flutter build web --release --output build/web_pos --target lib/main_pos.dart --base-href=/pos/
+
+      - name: Stage Hosting Directory
+        run: |
+          rm -rf public
+          mkdir -p public/pos
+          cp -r build/web/. public/
+          cp -r build/web_pos/. public/pos/
 
       - name: Deploy to Firebase Hosting
         uses: FirebaseExtended/action-hosting-deploy@v0

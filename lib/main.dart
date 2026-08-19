@@ -3,8 +3,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 import 'providers/cart_provider.dart';
 import 'screens/customer/menu_screen.dart';
-import 'screens/pos/dashboard_screen.dart';
-import 'screens/pos/table_qr_screen.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -17,13 +15,13 @@ void main() async {
       providers: [
         ChangeNotifierProvider(create: (_) => CartProvider()),
       ],
-      child: const MyApp(),
+      child: const CustomerApp(),
     ),
   );
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class CustomerApp extends StatelessWidget {
+  const CustomerApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -35,13 +33,26 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         fontFamily: 'sans-serif',
       ),
-      home: const HomeScreen(),
+      home: const CustomerHomeScreen(),
     );
   }
 }
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+class CustomerHomeScreen extends StatelessWidget {
+  const CustomerHomeScreen({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final table = Uri.base.queryParameters['table'];
+    if (table != null && table.isNotEmpty) {
+      return MenuScreen(tableNumber: table);
+    }
+    return const _CustomerLanding();
+  }
+}
+
+class _CustomerLanding extends StatelessWidget {
+  const _CustomerLanding();
 
   @override
   Widget build(BuildContext context) {
@@ -75,103 +86,43 @@ class HomeScreen extends StatelessWidget {
                   style: TextStyle(color: Colors.white70, fontSize: 16),
                 ),
                 const SizedBox(height: 60),
-                _RoleButton(
-                  icon: Icons.qr_code_scanner,
-                  label: 'Customer Menu',
-                  subtitle: 'Browse & order from table',
-                  onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (_) => const MenuScreen(tableNumber: '1')),
-                  ),
-                ),
-                const SizedBox(height: 16),
-                _RoleButton(
-                  icon: Icons.point_of_sale,
-                  label: 'POS Dashboard',
-                  subtitle: 'Manage incoming orders',
-                  onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (_) => const DashboardScreen()),
-                  ),
-                ),
-                const SizedBox(height: 16),
-                _RoleButton(
-                  icon: Icons.qr_code_2,
-                  label: 'QR Code Manager',
-                  subtitle: 'Generate & print table QR codes',
-                  onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (_) => const TableQRScreen()),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _RoleButton extends StatelessWidget {
-  final IconData icon;
-  final String label;
-  final String subtitle;
-  final VoidCallback onTap;
-
-  const _RoleButton({
-    required this.icon,
-    required this.label,
-    required this.subtitle,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 32),
-      child: Material(
-        color: Colors.white.withOpacity(0.15),
-        borderRadius: BorderRadius.circular(16),
-        child: InkWell(
-          borderRadius: BorderRadius.circular(16),
-          onTap: onTap,
-          child: Container(
-            padding: const EdgeInsets.all(20),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: Colors.white30),
-            ),
-            child: Row(
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.2),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Icon(icon, color: Colors.white, size: 28),
-                ),
-                const SizedBox(width: 16),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      label,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
+                Material(
+                  color: Colors.white.withOpacity(0.15),
+                  borderRadius: BorderRadius.circular(16),
+                  child: InkWell(
+                    borderRadius: BorderRadius.circular(16),
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => const MenuScreen(tableNumber: '1'),
                       ),
                     ),
-                    Text(
-                      subtitle,
-                      style: const TextStyle(color: Colors.white70, fontSize: 12),
+                    child: Container(
+                      padding: const EdgeInsets.all(20),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(16),
+                        border: Border.all(color: Colors.white30),
+                      ),
+                      child: const Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(Icons.menu_book, color: Colors.white),
+                          SizedBox(width: 16),
+                          Text(
+                            'Browse Menu',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),
+                          ),
+                          SizedBox(width: 8),
+                          Icon(Icons.chevron_right, color: Colors.white70),
+                        ],
+                      ),
                     ),
-                  ],
+                  ),
                 ),
-                const Spacer(),
-                const Icon(Icons.chevron_right, color: Colors.white70),
               ],
             ),
           ),
