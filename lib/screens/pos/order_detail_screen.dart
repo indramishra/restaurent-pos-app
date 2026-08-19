@@ -1,15 +1,17 @@
 import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+
 import '../../models/order_model.dart';
 
 class OrderDetailScreen extends StatelessWidget {
   final OrderModel order;
 
-  const OrderDetailScreen({Key? key, required this.order}) : super(key: key);
+  const OrderDetailScreen({super.key, required this.order});
 
   Future<Uint8List> _generateReceiptPdf() async {
     final pdf = pw.Document();
@@ -36,7 +38,9 @@ class OrderDetailScreen extends StatelessWidget {
               mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
               children: [
                 pw.Text('Table: ${order.tableNumber}'),
-                pw.Text('Order: #${order.id?.substring(0, 6).toUpperCase() ?? 'N/A'}'),
+                pw.Text(
+                  'Order: #${order.id?.substring(0, 6).toUpperCase() ?? 'N/A'}',
+                ),
               ],
             ),
             pw.Text(
@@ -44,7 +48,10 @@ class OrderDetailScreen extends StatelessWidget {
             ),
             pw.Divider(),
             pw.SizedBox(height: 4),
-            pw.Text('ITEMS', style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
+            pw.Text(
+              'ITEMS',
+              style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
+            ),
             pw.SizedBox(height: 4),
             ...order.items.map(
               (item) => pw.Row(
@@ -61,7 +68,10 @@ class OrderDetailScreen extends StatelessWidget {
             pw.Row(
               mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
               children: [
-                pw.Text('TOTAL', style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
+                pw.Text(
+                  'TOTAL',
+                  style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
+                ),
                 pw.Text(
                   '₹${order.totalAmount.toStringAsFixed(2)}',
                   style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
@@ -84,10 +94,9 @@ class OrderDetailScreen extends StatelessWidget {
   }
 
   Future<void> _updateStatus(String newStatus) async {
-    await FirebaseFirestore.instance
-        .collection('orders')
-        .doc(order.id)
-        .update({'status': newStatus});
+    await FirebaseFirestore.instance.collection('orders').doc(order.id).update({
+      'status': newStatus,
+    });
   }
 
   @override
@@ -117,7 +126,9 @@ class OrderDetailScreen extends StatelessWidget {
             Card(
               color: Colors.orange.shade50,
               elevation: 2,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
               child: Padding(
                 padding: const EdgeInsets.all(16),
                 child: Row(
@@ -140,19 +151,25 @@ class OrderDetailScreen extends StatelessWidget {
                           ),
                           Text(
                             '${order.createdAt.day}/${order.createdAt.month}/${order.createdAt.year} at ${order.createdAt.hour}:${order.createdAt.minute.toString().padLeft(2, '0')}',
-                            style: TextStyle(color: Colors.grey.shade600, fontSize: 12),
+                            style: TextStyle(
+                              color: Colors.grey.shade600,
+                              fontSize: 12,
+                            ),
                           ),
                         ],
                       ),
                     ),
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 8,
+                      ),
                       decoration: BoxDecoration(
                         color: order.status == 'pending'
                             ? Colors.orange
                             : order.status == 'preparing'
-                                ? Colors.blue
-                                : Colors.green,
+                            ? Colors.blue
+                            : Colors.green,
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: Text(
@@ -176,24 +193,29 @@ class OrderDetailScreen extends StatelessWidget {
             const SizedBox(height: 8),
 
             // Items list
-            ...order.items.map((item) => Card(
-                  margin: const EdgeInsets.only(bottom: 8),
-                  child: ListTile(
-                    title: Text(item.menuItem.name),
-                    subtitle: Text(item.menuItem.description),
-                    trailing: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Text('x${item.quantity}', style: TextStyle(color: Colors.grey.shade600)),
-                        Text(
-                          '₹${item.totalPrice.toStringAsFixed(2)}',
-                          style: const TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    ),
+            ...order.items.map(
+              (item) => Card(
+                margin: const EdgeInsets.only(bottom: 8),
+                child: ListTile(
+                  title: Text(item.menuItem.name),
+                  subtitle: Text(item.menuItem.description),
+                  trailing: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Text(
+                        'x${item.quantity}',
+                        style: TextStyle(color: Colors.grey.shade600),
+                      ),
+                      Text(
+                        '₹${item.totalPrice.toStringAsFixed(2)}',
+                        style: const TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    ],
                   ),
-                )),
+                ),
+              ),
+            ),
 
             const Divider(height: 24),
             Row(
@@ -205,7 +227,11 @@ class OrderDetailScreen extends StatelessWidget {
                 ),
                 Text(
                   '₹${order.totalAmount.toStringAsFixed(2)}',
-                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Colors.deepOrange),
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                    color: Colors.deepOrange,
+                  ),
                 ),
               ],
             ),

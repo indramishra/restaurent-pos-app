@@ -50,6 +50,9 @@ app.*.map.json
 # Generated hosting staging dir (built by CI)
 /public/
 
+# Agent instruction file (local only)
+/AGENTS.md
+
 # Firebase / credentials
 .firebase/
 firebase-debug.log

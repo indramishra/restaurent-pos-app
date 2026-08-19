@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import '../../providers/cart_provider.dart';
 
 class CartScreen extends StatelessWidget {
   final String tableNumber;
 
-  const CartScreen({Key? key, required this.tableNumber}) : super(key: key);
+  const CartScreen({super.key, required this.tableNumber});
 
   @override
   Widget build(BuildContext context) {
@@ -23,9 +24,16 @@ class CartScreen extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.shopping_cart_outlined, size: 80, color: Colors.grey.shade300),
+                  Icon(
+                    Icons.shopping_cart_outlined,
+                    size: 80,
+                    color: Colors.grey.shade300,
+                  ),
                   const SizedBox(height: 16),
-                  const Text('Your cart is empty', style: TextStyle(fontSize: 18, color: Colors.grey)),
+                  const Text(
+                    'Your cart is empty',
+                    style: TextStyle(fontSize: 18, color: Colors.grey),
+                  ),
                   const SizedBox(height: 8),
                   TextButton(
                     onPressed: () => Navigator.pop(context),
@@ -46,7 +54,9 @@ class CartScreen extends StatelessWidget {
                     final cartItem = cart.items[index];
                     return Card(
                       margin: const EdgeInsets.only(bottom: 10),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
                       child: Padding(
                         padding: const EdgeInsets.all(12),
                         child: Row(
@@ -58,7 +68,10 @@ class CartScreen extends StatelessWidget {
                                 color: Colors.orange.shade100,
                                 borderRadius: BorderRadius.circular(10),
                               ),
-                              child: const Icon(Icons.fastfood, color: Colors.deepOrange),
+                              child: const Icon(
+                                Icons.fastfood,
+                                color: Colors.deepOrange,
+                              ),
                             ),
                             const SizedBox(width: 12),
                             Expanded(
@@ -67,12 +80,18 @@ class CartScreen extends StatelessWidget {
                                 children: [
                                   Text(
                                     cartItem.menuItem.name,
-                                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 15,
+                                    ),
                                   ),
                                   const SizedBox(height: 4),
                                   Text(
                                     '₹${cartItem.menuItem.price.toStringAsFixed(2)} each',
-                                    style: TextStyle(color: Colors.grey.shade600, fontSize: 12),
+                                    style: TextStyle(
+                                      color: Colors.grey.shade600,
+                                      fontSize: 12,
+                                    ),
                                   ),
                                 ],
                               ),
@@ -80,21 +99,31 @@ class CartScreen extends StatelessWidget {
                             Row(
                               children: [
                                 InkWell(
-                                  onTap: () => cart.removeItem(cartItem.menuItem.id),
+                                  onTap: () =>
+                                      cart.removeItem(cartItem.menuItem.id),
                                   child: Container(
                                     padding: const EdgeInsets.all(4),
                                     decoration: BoxDecoration(
                                       color: Colors.orange.shade100,
                                       borderRadius: BorderRadius.circular(6),
                                     ),
-                                    child: const Icon(Icons.remove, size: 18, color: Colors.deepOrange),
+                                    child: const Icon(
+                                      Icons.remove,
+                                      size: 18,
+                                      color: Colors.deepOrange,
+                                    ),
                                   ),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 10,
+                                  ),
                                   child: Text(
                                     '${cartItem.quantity}',
-                                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16,
+                                    ),
                                   ),
                                 ),
                                 InkWell(
@@ -105,7 +134,11 @@ class CartScreen extends StatelessWidget {
                                       color: Colors.deepOrange,
                                       borderRadius: BorderRadius.circular(6),
                                     ),
-                                    child: const Icon(Icons.add, size: 18, color: Colors.white),
+                                    child: const Icon(
+                                      Icons.add,
+                                      size: 18,
+                                      color: Colors.white,
+                                    ),
                                   ),
                                 ),
                               ],
@@ -113,7 +146,10 @@ class CartScreen extends StatelessWidget {
                             const SizedBox(width: 10),
                             Text(
                               '₹${cartItem.totalPrice.toStringAsFixed(2)}',
-                              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14,
+                              ),
                             ),
                           ],
                         ),
@@ -127,9 +163,15 @@ class CartScreen extends StatelessWidget {
               Container(
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+                  borderRadius: const BorderRadius.vertical(
+                    top: Radius.circular(20),
+                  ),
                   boxShadow: [
-                    BoxShadow(color: Colors.black.withOpacity(0.08), blurRadius: 10, offset: const Offset(0, -4)),
+                    BoxShadow(
+                      color: Colors.black.withValues(alpha: 0.08),
+                      blurRadius: 10,
+                      offset: const Offset(0, -4),
+                    ),
                   ],
                 ),
                 padding: const EdgeInsets.fromLTRB(20, 20, 20, 32),
@@ -139,23 +181,38 @@ class CartScreen extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('${cart.items.fold(0, (s, i) => s + i.quantity)} items', style: TextStyle(color: Colors.grey.shade600)),
-                        Text('₹${cart.totalAmount.toStringAsFixed(2)}',
-                            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Colors.deepOrange)),
+                        Text(
+                          '${cart.items.fold(0, (s, i) => s + i.quantity)} items',
+                          style: TextStyle(color: Colors.grey.shade600),
+                        ),
+                        Text(
+                          '₹${cart.totalAmount.toStringAsFixed(2)}',
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                            color: Colors.deepOrange,
+                          ),
+                        ),
                       ],
                     ),
                     const Divider(height: 20),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: const [
-                        Text('Taxes & charges', style: TextStyle(color: Colors.grey)),
+                        Text(
+                          'Taxes & charges',
+                          style: TextStyle(color: Colors.grey),
+                        ),
                         Text('Included', style: TextStyle(color: Colors.grey)),
                       ],
                     ),
                     const SizedBox(height: 16),
                     // Razorpay banner
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 8,
+                      ),
                       decoration: BoxDecoration(
                         color: Colors.blue.shade50,
                         borderRadius: BorderRadius.circular(8),
@@ -168,7 +225,10 @@ class CartScreen extends StatelessWidget {
                           Expanded(
                             child: Text(
                               'Secure payment via Razorpay',
-                              style: TextStyle(color: Colors.blue.shade700, fontSize: 12),
+                              style: TextStyle(
+                                color: Colors.blue.shade700,
+                                fontSize: 12,
+                              ),
                             ),
                           ),
                         ],
@@ -177,13 +237,20 @@ class CartScreen extends StatelessWidget {
                     const SizedBox(height: 14),
                     ElevatedButton.icon(
                       icon: const Icon(Icons.payment),
-                      label: Text('Pay ₹${cart.totalAmount.toStringAsFixed(2)}'),
+                      label: Text(
+                        'Pay ₹${cart.totalAmount.toStringAsFixed(2)}',
+                      ),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.deepOrange,
                         foregroundColor: Colors.white,
                         padding: const EdgeInsets.all(16),
-                        textStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                        textStyle: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
                       ),
                       onPressed: () async {
                         // TODO: Integrate Razorpay SDK here
@@ -191,7 +258,8 @@ class CartScreen extends StatelessWidget {
                         showDialog(
                           context: context,
                           barrierDismissible: false,
-                          builder: (_) => const Center(child: CircularProgressIndicator()),
+                          builder: (_) =>
+                              const Center(child: CircularProgressIndicator()),
                         );
 
                         try {
@@ -205,7 +273,9 @@ class CartScreen extends StatelessWidget {
                                 children: [
                                   Icon(Icons.check_circle, color: Colors.white),
                                   SizedBox(width: 8),
-                                  Text('Order placed! Kitchen has been notified.'),
+                                  Text(
+                                    'Order placed! Kitchen has been notified.',
+                                  ),
                                 ],
                               ),
                               backgroundColor: Colors.green,
@@ -214,7 +284,10 @@ class CartScreen extends StatelessWidget {
                         } catch (e) {
                           Navigator.pop(context);
                           ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text('Failed to place order: $e'), backgroundColor: Colors.red),
+                            SnackBar(
+                              content: Text('Failed to place order: $e'),
+                              backgroundColor: Colors.red,
+                            ),
                           );
                         }
                       },
